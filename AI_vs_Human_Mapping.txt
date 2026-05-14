@@ -1,0 +1,25 @@
+AI vs. Human Message Version Mapping
+-----------------------------------
+
+This file documents the mapping between AI-generated messages and human-selected priority messages for the comparison analysis.
+
+AI-generated messages:
+- All AI-generated messages are Version 4 (e.g., pme_3_4).
+- Topics with AI-generated messages: 3, 4, 5, 6, 7, 8.
+- No AI-generated messages for Topics 1 (Control), 2 (Voluntary Warning), or 9 (California).
+
+Human-selected priority messages:
+- Topic 3 (Depression and anxiety): Version 1
+- Topic 4 (Negative body image): Version 2
+- Topic 5 (Addiction): Version 3
+- Topic 6 (Sleep): Version 1
+- Topic 7 (Mental health harms to young people): Version 1
+- Topic 8 (Not been proven safe): Version 1
+
+Summary of mapping (Topic: Human Priority | AI):
+3: v1 | v4
+4: v2 | v4
+5: v3 | v4
+6: v1 | v4
+7: v1 | v4
+8: v1 | v4
