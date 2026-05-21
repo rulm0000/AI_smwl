@@ -25,6 +25,26 @@ if _rc != 0 {
 }
 capture mkdir "$output/Cohens_d"
 
+capture program drop fmt2
+program define fmt2, rclass
+    args x
+    return local out "`=trim(string(`x', "%9.2f"))'"
+end
+
+capture program drop pformat
+program define pformat, rclass
+    args p
+    if (`p' < 0.001) {
+        return local out "<0.001"
+    }
+    else if (`p' >= 0.9995) {
+        return local out ">.99"
+    }
+    else {
+        return local out "`=trim(string(`p', "%9.3f"))'"
+    }
+end
+
 capture program drop topic_name
 program define topic_name, rclass
     args t
@@ -34,7 +54,7 @@ program define topic_name, rclass
     if (`t' == 3) local name "Depression and anxiety"
     if (`t' == 4) local name "Negative body image"
     if (`t' == 5) local name "Addiction"
-    if (`t' == 6) local name "Sleep"
+    if (`t' == 6) local name "Sleep disruption"
     if (`t' == 7) local name "Mental health harms to young people"
     if (`t' == 8) local name "Not been proven safe"
     return local name "`name'"
@@ -128,6 +148,60 @@ postclose `dpost'
 
 use `ddata', clear
 format b seb lb ub p sy icc spooled lambda cohen_d denom %12.9f
+
+preserve
+    keep sample topic topic_name b lb ub p cohen_d
+    reshape wide b lb ub p cohen_d, i(topic topic_name) j(sample)
+    sort b0
+
+    putexcel set "$tables/eTable1_Human_AI_ADEs_Cohens_d.xlsx", replace
+    putexcel A1 = ("eTable 1. Effects of warning topics vs. control on perceived message effectiveness by sample, n=1,012 human participants and n=1,000 AI personas"), bold
+    putexcel B2 = ("Human participants"), bold hcenter
+    putexcel E2 = ("AI personas"), bold hcenter
+    putexcel A3 = ("Warning topic"), bold
+    putexcel B3 = ("ADE (95% CI)"), bold
+    putexcel C3 = ("p-value"), bold
+    putexcel D3 = ("Cohen's d"), bold
+    putexcel E3 = ("ADE (95% CI)"), bold
+    putexcel F3 = ("p-value"), bold
+    putexcel G3 = ("Cohen's d"), bold
+
+    local row = 4
+    forvalues i = 1/`=_N' {
+        fmt2 b0[`i']
+        local human_b_s = r(out)
+        fmt2 lb0[`i']
+        local human_lb_s = r(out)
+        fmt2 ub0[`i']
+        local human_ub_s = r(out)
+        pformat p0[`i']
+        local human_p_s = r(out)
+        fmt2 cohen_d0[`i']
+        local human_d_s = r(out)
+
+        fmt2 b1[`i']
+        local ai_b_s = r(out)
+        fmt2 lb1[`i']
+        local ai_lb_s = r(out)
+        fmt2 ub1[`i']
+        local ai_ub_s = r(out)
+        pformat p1[`i']
+        local ai_p_s = r(out)
+        fmt2 cohen_d1[`i']
+        local ai_d_s = r(out)
+
+        putexcel A`row' = (topic_name[`i'])
+        putexcel B`row' = ("`human_b_s' (`human_lb_s', `human_ub_s')")
+        putexcel C`row' = ("`human_p_s'")
+        putexcel D`row' = ("`human_d_s'")
+        putexcel E`row' = ("`ai_b_s' (`ai_lb_s', `ai_ub_s')")
+        putexcel F`row' = ("`ai_p_s'")
+        putexcel G`row' = ("`ai_d_s'")
+        local row = `row' + 1
+    }
+
+    putexcel A`row' = ("Note. ADE = average differential effect, estimated as the warning-topic coefficient from separate mixed-effects models with control as the reference category within each sample. Cohen's d was calculated using the Campbell HLM/mixed-effects formula."), italic
+restore
 
 putexcel set "$output/Cohens_d/Cohens_d.xlsx", sheet("Warning_vs_Control") modify
 putexcel A1 = ("Cohen's d for warning topics vs. control by sample"), bold

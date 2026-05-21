@@ -12,7 +12,7 @@ Human-selected priority messages:
 - Topic 3 (Depression and anxiety): Version 1
 - Topic 4 (Negative body image): Version 2
 - Topic 5 (Addiction): Version 3
-- Topic 6 (Sleep): Version 1
+- Topic 6 (Sleep disruption): Version 1
 - Topic 7 (Mental health harms to young people): Version 1
 - Topic 8 (Not been proven safe): Version 1
 

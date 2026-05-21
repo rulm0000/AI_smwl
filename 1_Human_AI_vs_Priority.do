@@ -37,7 +37,7 @@ program define topic_name, rclass
     if (`t' == 3) local name "Depression and anxiety"
     if (`t' == 4) local name "Negative body image"
     if (`t' == 5) local name "Addiction"
-    if (`t' == 6) local name "Sleep"
+    if (`t' == 6) local name "Sleep disruption"
     if (`t' == 7) local name "Mental health harms to young people"
     if (`t' == 8) local name "Not been proven safe"
     if (`t' == 99) local name "Overall"

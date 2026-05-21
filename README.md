@@ -16,13 +16,14 @@ This folder compares AI-refined warning messages against researcher-generated pr
    - Bar charts for researcher-generated vs. AI-refined ratings, human participant vs. AI persona ADEs, and human participant vs. AI persona means with the control message.
 
 4. **Viewpoints tables** (`6_Viewpoints_Tables.do`)
-   - Sample characteristics table, eTable 1 regression coefficients, and eTable 2 means/SEs/rankings.
+   - Sample characteristics table, pooled interaction regression coefficients, and eTable 2 means/SEs/rankings.
 
 5. **Distribution visualizations** (`4_Distributions.do`, `5_Distribution_Replication.do`)
    - Density plots, box plots, and histograms comparing distributions.
 
 6. **Cohen's d decomposition** (`7_Cohens_d_Decomposition.do`)
    - Calculates Campbell HLM/mixed-effects Cohen's d values for warning-vs-control effects by sample.
+   - Exports eTable 1 with warning-vs-control ADEs, 95% CIs, p-values, and Cohen's d by sample.
    - Decomposes the AI-minus-human difference in Cohen's d into ADE and effective-denominator contributions using a Shapley-style two-factor decomposition.
    - Exports `Warning_vs_Control` and `D_Decomposition` sheets to `output/Cohens_d/Cohens_d.xlsx`.
 

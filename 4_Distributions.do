@@ -54,7 +54,7 @@ graph export "$human_generated_figures/Figure_Distribution_Density_Overall.png",
 * Shows median, quartiles, and outliers for each topic.
 
 * Shorten labels for the plot
-label define topiclab 3 "Depression" 4 "Negative body image" 5 "Addiction" 6 "Sleep" 7 "Mental health" 8 "Not proven safe", modify
+label define topiclab 3 "Depression" 4 "Negative body image" 5 "Addiction" 6 "Sleep disruption" 7 "Mental health" 8 "Not proven safe", modify
 label values topic topiclab
 
 graph box pme, over(is_ai, label(labsize(vsmall))) over(topic, label(labsize(vsmall))) ///

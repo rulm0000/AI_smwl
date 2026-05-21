@@ -77,7 +77,7 @@ graph export "$ai_human_rated_figures/Figure_Distribution_Humans_vs_AI_Personas_
 * ==============================================================================
 
 * Define labels manually to avoid append conflicts
-label define topiclab_fig 1 "Control" 2 "Screentime break" 3 "Depression" 4 "Negative body image" 5 "Addiction" 6 "Sleep" 7 "Mental health" 8 "Not proven safe"
+label define topiclab_fig 1 "Control" 2 "Screentime break" 3 "Depression" 4 "Negative body image" 5 "Addiction" 6 "Sleep disruption" 7 "Mental health" 8 "Not proven safe"
 label values topic topiclab_fig
 
 graph box pme, over(sample, label(labsize(vsmall))) over(topic, label(labsize(vsmall))) ///

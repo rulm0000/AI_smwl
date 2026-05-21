@@ -63,7 +63,7 @@ program define topic_name, rclass
     if (`t' == 3) local name "Depression and anxiety"
     if (`t' == 4) local name "Negative body image"
     if (`t' == 5) local name "Addiction"
-    if (`t' == 6) local name "Sleep"
+    if (`t' == 6) local name "Sleep disruption"
     if (`t' == 7) local name "Mental health harms to young people"
     if (`t' == 8) local name "Not been proven safe"
     return local name "`name'"
@@ -274,7 +274,7 @@ append using `human_subset'
 
 label define samplelab 0 "Human participant" 1 "AI persona", replace
 label values sample samplelab
-label define topiclab 1 "Control" 2 "Screentime break warning" 3 "Depression and anxiety" 4 "Negative body image" 5 "Addiction" 6 "Sleep" 7 "Mental health harms to young people" 8 "Not been proven safe", replace
+label define topiclab 1 "Control" 2 "Screentime break warning" 3 "Depression and anxiety" 4 "Negative body image" 5 "Addiction" 6 "Sleep disruption" 7 "Mental health harms to young people" 8 "Not been proven safe", replace
 label values topic topiclab
 
 tempfile pooled_data
@@ -283,12 +283,12 @@ save `pooled_data'
 mixed pme ib1.topic##ib0.sample || pid: , vce(robust)
 
 * ==============================================================================
-* eTable 1: Regression coefficients
+* Supporting table: Regression coefficients
 * ==============================================================================
 
-display "Generating eTable 1..."
-putexcel set "$tables/eTable1_Human_AI_Regression_Coefficients.xlsx", replace
-putexcel A1 = ("eTable 1. Impact of warning topic and sample on perceived message effectiveness, n=1,012 human participants and n=1,000 AI personas")
+display "Generating pooled interaction regression coefficient table..."
+putexcel set "$tables/Human_AI_Regression_Coefficients.xlsx", replace
+putexcel A1 = ("Supplemental model output. Impact of warning topic and sample on perceived message effectiveness, n=1,012 human participants and n=1,000 AI personas")
 putexcel A2 = ("Variable"), bold
 putexcel B2 = ("Coefficient (95% CI)"), bold
 putexcel C2 = ("p-value"), bold
