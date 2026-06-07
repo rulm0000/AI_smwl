@@ -152,10 +152,16 @@ format b seb lb ub p sy icc spooled lambda cohen_d denom %12.9f
 preserve
     keep sample topic topic_name b lb ub p cohen_d
     reshape wide b lb ub p cohen_d, i(topic topic_name) j(sample)
-    sort b0
+    gen topic_order = .
+    local order = 1
+    foreach t of numlist 5 2 8 6 4 3 7 {
+        replace topic_order = `order' if topic == `t'
+        local order = `order' + 1
+    }
+    sort topic_order
 
     putexcel set "$tables/eTable1_Human_AI_ADEs_Cohens_d.xlsx", replace
-    putexcel A1 = ("eTable 1. Effects of warning topics vs. control on perceived message effectiveness by sample, n=1,012 human participants and n=1,000 AI personas"), bold
+    putexcel A1 = ("eTable 1. Effect of warning topic on perceived message effectiveness by sample, n=1,012 human participants and n=1,000 AI personas"), bold
     putexcel B2 = ("Human participants"), bold hcenter
     putexcel E2 = ("AI personas"), bold hcenter
     putexcel A3 = ("Warning topic"), bold
@@ -167,6 +173,11 @@ preserve
     putexcel G3 = ("Cohen's d"), bold
 
     local row = 4
+    putexcel A`row' = ("Control")
+    putexcel B`row' = ("[Referent]")
+    putexcel E`row' = ("[Referent]")
+    local row = `row' + 1
+
     forvalues i = 1/`=_N' {
         fmt2 b0[`i']
         local human_b_s = r(out)
@@ -199,8 +210,6 @@ preserve
         putexcel G`row' = ("`ai_d_s'")
         local row = `row' + 1
     }
-
-    putexcel A`row' = ("Note. ADE = average differential effect, estimated as the warning-topic coefficient from separate mixed-effects models with control as the reference category within each sample. Cohen's d was calculated using the Campbell HLM/mixed-effects formula."), italic
 restore
 
 putexcel set "$output/Cohens_d/Cohens_d.xlsx", sheet("Warning_vs_Control") modify
