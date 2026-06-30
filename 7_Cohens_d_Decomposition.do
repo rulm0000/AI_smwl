@@ -19,8 +19,10 @@
 clear all
 set more off
 
-capture confirm global output
-if _rc != 0 {
+* Run setup if globals are not yet defined (e.g. when running this file on its own).
+* Use an empty-string check rather than "confirm global", which is not a valid
+* Stata command and always errors.
+if "$output" == "" {
     do "setup.do"
 }
 capture mkdir "$output/Cohens_d"
