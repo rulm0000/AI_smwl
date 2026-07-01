@@ -43,20 +43,12 @@ do "2_Replication_Analysis.do"
 display "Running Analysis 3: Generating Viewpoints tables..."
 do "6_Viewpoints_Tables.do"
 
-* 4. Figures
-display "Running Analysis 4: Generating Figures..."
-do "3_Figures.do"
+* 4. Manuscript Figure 2
+display "Running Analysis 4: Generating manuscript Figure 2..."
+do "3_Manuscript_Figure2.do"
 
-* 5. Distribution visualizations
-display "Running Analysis 5: Distribution visualizations..."
-do "4_Distributions.do"
-
-* 6. Replication distribution visualizations
-display "Running Analysis 6: Replication distribution visualizations..."
-do "5_Distribution_Replication.do"
-
-* 7. Cohen's d warning-vs-control values and decomposition
-display "Running Analysis 7: Cohen's d decomposition..."
+* 5. Cohen's d warning-vs-control values and decomposition
+display "Running Analysis 5: Cohen's d decomposition..."
 do "7_Cohens_d_Decomposition.do"
 
 display "========================================================="
