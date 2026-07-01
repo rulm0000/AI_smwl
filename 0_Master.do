@@ -3,15 +3,19 @@
 
 clear all
 set more off
-macro drop _all
+local supplied_project_root `"$project_root"'
 
 * ----------------------------
 * GitHub-friendly setup
 * ----------------------------
-* project_root should point to this analysis folder.
+* project_root should point to this analysis folder. To run from another
+* working directory, set global project_root before running this master file.
 
 * Anna file path
-if "`c(username)'" == "ag" {
+if `"`supplied_project_root'"' != "" {
+	global project_root `"`supplied_project_root'"'
+}
+else if "`c(username)'" == "ag" {
 	global project_root "/Users/ag/Documents/GitHub/AI_smwl"
 }
 else if "`c(username)'" == "culm" {
@@ -21,7 +25,7 @@ else {
 	global project_root "."
 }
 
-do "setup.do"
+do "$project_root/setup.do"
 
 display "========================================================="
 display "Starting AI vs. Human Analysis Pipeline"

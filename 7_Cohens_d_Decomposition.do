@@ -50,7 +50,7 @@ program define topic_name, rclass
     args t
     local name ""
     if (`t' == 1) local name "Control"
-    if (`t' == 2) local name "Screentime break warning"
+    if (`t' == 2) local name "Screen time break warning"
     if (`t' == 3) local name "Depression and anxiety"
     if (`t' == 4) local name "Negative body image"
     if (`t' == 5) local name "Addiction"

@@ -7,3 +7,11 @@
 .~lock.*
 Thumbs.db
 .DS_Store
+
+# Legacy/non-manuscript generated Excel outputs kept local only
+output/tables/*.xlsx
+!output/tables/Table_Viewpoints_Sample_Characteristics.xlsx
+!output/tables/Table3_Warning_Topic_PME_by_Sample.xlsx
+!output/tables/eTable1_Message_Source_PME.xlsx
+!output/tables/eTable2_Warning_Topic_Sample_PME_Coefficients.xlsx
+output/Cohens_d/

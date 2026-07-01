@@ -1,6 +1,7 @@
 * 1_Human_AI_vs_Priority.do
 * Compares AI-refined warnings vs. researcher-generated priority warnings
-* among human participants and exports eTable 3.
+* among human participants and exports eTable 1.
+* Final manuscript output: supplemental eTable 1 for message-source PME.
 
 clear all
 set more off
@@ -58,8 +59,8 @@ replace is_ai = 0 if topic == 8 & version == 1
 
 local topic_order "5 8 6 4 3 7 99"
 
-putexcel set "$tables/eTable3_AI_Refined_vs_Researcher_Generated_ADEs.xlsx", replace
-putexcel A1 = ("eTable 3. Impact of message source on perceived message effectiveness, n=1,012 human participants")
+putexcel set "$tables/eTable1_Message_Source_PME.xlsx", replace
+putexcel A1 = ("eTable 1. Effect of message source on perceived message effectiveness, n=1,012 human participants")
 putexcel B2 = ("Difference in perceived message effectiveness, AI-refined vs. researcher-generated"), bold
 putexcel A3 = ("Message topic"), bold
 putexcel B3 = ("ADE (95% CI)"), bold
@@ -143,7 +144,5 @@ foreach t of local topic_order {
     local row = `row' + 1
 }
 
-copy "$tables/eTable3_AI_Refined_vs_Researcher_Generated_ADEs.xlsx" "$tables/Human_AI_vs_Priority_Results.xlsx", replace
-
 display "Human AI vs. priority analysis complete."
-display "Results saved to $tables/eTable3_AI_Refined_vs_Researcher_Generated_ADEs.xlsx"
+display "Results saved to $tables/eTable1_Message_Source_PME.xlsx"

@@ -1,5 +1,5 @@
 * 6_Viewpoints_Tables.do
-* Creates Viewpoints sample characteristics table and eTables 1-2.
+* Creates Viewpoints manuscript Table 2, Table 3, and supplemental eTable 2.
 
 clear all
 set more off
@@ -59,7 +59,7 @@ program define topic_name, rclass
     args t
     local name ""
     if (`t' == 1) local name "Control"
-    if (`t' == 2) local name "Screentime break warning"
+    if (`t' == 2) local name "Screen time break warning"
     if (`t' == 3) local name "Depression and anxiety"
     if (`t' == 4) local name "Negative body image"
     if (`t' == 5) local name "Addiction"
@@ -114,7 +114,12 @@ local n_ai = r(N)
 quietly count if sample == 0
 local n_human = r(N)
 
-putexcel A1 = ("Table 2. Sample characteristics, n=`n_ai' AI personas and n=`n_human' human participants"), bold
+local n_ai_s : display %9.0fc `n_ai'
+local n_ai_s = trim("`n_ai_s'")
+local n_human_s : display %9.0fc `n_human'
+local n_human_s = trim("`n_human_s'")
+
+putexcel A1 = ("Table 2. Sample characteristics, n=`n_ai_s' AI personas and n=`n_human_s' human participants"), bold
 putexcel A2 = ("Characteristic"), bold
 putexcel B2 = ("AI personas"), bold hcenter
 putexcel D2 = ("Human participants"), bold hcenter
@@ -157,6 +162,7 @@ putexcel A`row' = ("Gender"), bold
 local row = `row' + 1
 foreach l of numlist 1 2 3 {
     local lbl : label (gender_cat) `l'
+    if (`l' == 3) local lbl "Non-binary/preferred-to-self-describe"
     quietly count if sample == 1 & !missing(gender_cat)
     local den_ai = r(N)
     quietly count if sample == 1 & gender_cat == `l'
@@ -189,7 +195,7 @@ foreach l of numlist 1 2 3 {
     local row = `row' + 1
 }
 
-putexcel A`row' = ("Race or ethnicity"), bold
+putexcel A`row' = ("Race/ethnicity"), bold
 local row = `row' + 1
 foreach l of numlist 1 2 3 4 5 6 7 {
     local lbl : label (race_cat) `l'
@@ -225,9 +231,9 @@ foreach l of numlist 1 2 3 4 5 6 7 {
     local row = `row' + 1
 }
 
-putexcel A`row' = ("Note. AI personas could only be assigned a gender of female or male, so no personas were assigned to non-binary or another gender identity."), italic
+putexcel A`row' = ("Note. AI personas could only be assigned a gender of female or male, so no personas were assigned to non-binary/preferred-to-self-describe."), italic
 local row = `row' + 1
-putexcel A`row' = ("AI personas could only be assigned one race/ethnicity from a fixed list of options, so no personas were assigned to American Indian or Alaska Native, Native Hawaiian or Pacific Islander, another race or ethnicity, or multiracial/ethnic."), italic
+putexcel A`row' = ("AI personas could only be assigned one race/ethnicity from a fixed list of options, so no personas were assigned to American Indian/Alaska Native, Native Hawaiian/Pacific Islander, another race/ethnicity, or multiracial/ethnic."), italic
 
 display "Sample characteristics saved to $tables/Table_Viewpoints_Sample_Characteristics.xlsx"
 
@@ -272,9 +278,9 @@ replace pid = pid + 100000
 gen sample = 1
 append using `human_subset'
 
-label define samplelab 0 "Human participant" 1 "AI persona", replace
+label define samplelab 0 "Human participants" 1 "AI personas", replace
 label values sample samplelab
-label define topiclab 1 "Control" 2 "Screentime break warning" 3 "Depression and anxiety" 4 "Negative body image" 5 "Addiction" 6 "Sleep disruption" 7 "Mental health harms to young people" 8 "Not been proven safe", replace
+label define topiclab 1 "Control" 2 "Screen time break warning" 3 "Depression and anxiety" 4 "Negative body image" 5 "Addiction" 6 "Sleep disruption" 7 "Mental health harms to young people" 8 "Not been proven safe", replace
 label values topic topiclab
 
 tempfile pooled_data
@@ -287,8 +293,8 @@ mixed pme ib1.topic##ib0.sample || pid: , vce(robust)
 * ==============================================================================
 
 display "Generating pooled interaction regression coefficient table..."
-putexcel set "$tables/Human_AI_Regression_Coefficients.xlsx", replace
-putexcel A1 = ("Supplemental model output. Impact of warning topic and sample on perceived message effectiveness, n=1,012 human participants and n=1,000 AI personas")
+putexcel set "$tables/eTable2_Warning_Topic_Sample_PME_Coefficients.xlsx", replace
+putexcel A1 = ("eTable 2. Effect of warning topic and sample on perceived message effectiveness, n=1,012 human participants and n=1,000 AI personas")
 putexcel A2 = ("Variable"), bold
 putexcel B2 = ("Coefficient (95% CI)"), bold
 putexcel C2 = ("p-value"), bold
@@ -316,7 +322,7 @@ putexcel A`row' = ("   AI personas")
 write_coef `row' "1.sample"
 local row = `row' + 1
 
-putexcel A`row' = ("Warning topics x sample"), bold
+putexcel A`row' = ("Warning topics x Sample"), bold
 local row = `row' + 1
 foreach t of local manuscript_topic_order {
     topic_name `t'
@@ -331,10 +337,10 @@ local joint_p = r(out)
 putexcel A`row' = ("Note. The p-value for the joint significance of the interaction terms was `joint_p'."), italic
 
 * ==============================================================================
-* eTable 2: PME means, SEs, and rankings
+* Table 3: PME means, rankings, and warning-vs-control effects by sample
 * ==============================================================================
 
-display "Generating eTable 2..."
+display "Generating Table 3..."
 tempfile means_tbl
 tempname meanshold
 postfile `meanshold' topic sample mean se using `means_tbl', replace
@@ -357,52 +363,134 @@ drop neg_mean
 tempfile ranked_means
 save `ranked_means'
 
-keep if sample == 0
-rename mean human_mean
-rename se human_se
-rename rank human_rank
-keep topic human_mean human_se human_rank
-tempfile human_means
-save `human_means'
-
 use `ranked_means', clear
-keep if sample == 1
-rename mean ai_mean
-rename se ai_se
-rename rank ai_rank
-keep topic ai_mean ai_se ai_rank
-merge 1:1 topic using `human_means', nogen
-sort human_mean
+rename mean pme_mean
+rename se pme_se
+rename rank pme_rank
+reshape wide pme_mean pme_se pme_rank, i(topic) j(sample)
+tempfile means_wide
+save `means_wide'
 
-putexcel set "$tables/eTable2_Human_AI_Means_Rankings.xlsx", replace
-putexcel A1 = ("eTable 2. Perceived message effectiveness of warning topics by sample, n=1,012 human participants and n=1,000 AI personas")
+tempfile d_stats
+tempname dhold
+postfile `dhold' byte sample byte topic double b lb ub p cohen_d using `d_stats', replace
+
+foreach s in 0 1 {
+    use `pooled_data', clear
+    keep if sample == `s'
+
+    quietly mixed pme ib1.topic || pid: , vce(robust)
+    quietly estat icc
+    local icc = r(icc2)
+    matrix G = e(N_g)
+    local clusters = G[1,1]
+    quietly summarize pme if e(sample)
+    local sy = r(sd)
+
+    foreach t of numlist 2/8 {
+        quietly lincom `t'.topic
+        local b = r(estimate)
+        local lb = r(lb)
+        local ub = r(ub)
+        local p = r(p)
+
+        quietly count if topic == `t' & !missing(pme)
+        local n_warn = r(N)
+        quietly count if topic == 1 & !missing(pme)
+        local n_control = r(N)
+
+        local n = `n_warn' + `n_control'
+        local spooled = sqrt(((`sy'^2) * (`n' - 1) - ((`b'^2) * `n_warn' * `n_control' / `n')) / (`n' - 2))
+        local lambda = 1 - (2 * (`n' / `clusters') * `icc') / (`n' - 1)
+        local d = (`b' / `spooled') * sqrt(`lambda')
+
+        post `dhold' (`s') (`t') (`b') (`lb') (`ub') (`p') (`d')
+    }
+}
+postclose `dhold'
+
+use `d_stats', clear
+reshape wide b lb ub p cohen_d, i(topic) j(sample)
+merge 1:1 topic using `means_wide', nogen
+
+gen topic_order = .
+local order = 1
+foreach t of numlist 1 5 2 8 6 4 3 7 {
+    replace topic_order = `order' if topic == `t'
+    local order = `order' + 1
+}
+sort topic_order
+
+putexcel set "$tables/Table3_Warning_Topic_PME_by_Sample.xlsx", replace
+putexcel A1 = ("Table 3. Perceived message effectiveness by warning topic and sample, n=1,012 human participants and n=1,000 AI personas"), bold
 putexcel B2 = ("Human participants"), bold hcenter
-putexcel D2 = ("AI personas"), bold hcenter
-putexcel A3 = ("Warning topic"), bold
+putexcel G2 = ("AI personas"), bold hcenter
+putexcel A3 = ("Topic"), bold
 putexcel B3 = ("Mean (SE)"), bold
 putexcel C3 = ("Rank"), bold
-putexcel D3 = ("Mean (SE)"), bold
-putexcel E3 = ("Rank"), bold
+putexcel D3 = ("ADE (95% CI)"), bold
+putexcel E3 = ("p-value"), bold
+putexcel F3 = ("Cohen's d"), bold
+putexcel G3 = ("Mean (SE)"), bold
+putexcel H3 = ("Rank"), bold
+putexcel I3 = ("ADE (95% CI)"), bold
+putexcel J3 = ("p-value"), bold
+putexcel K3 = ("Cohen's d"), bold
 
 local row = 4
-forvalues i = 1/8 {
+forvalues i = 1/`=_N' {
     local t = topic[`i']
     topic_name `t'
     local name = r(name)
-    fmt2 human_mean[`i']
+    fmt2 pme_mean0[`i']
     local human_mean_s = r(out)
-    fmt2 human_se[`i']
+    fmt2 pme_se0[`i']
     local human_se_s = r(out)
-    fmt2 ai_mean[`i']
+    fmt2 pme_mean1[`i']
     local ai_mean_s = r(out)
-    fmt2 ai_se[`i']
+    fmt2 pme_se1[`i']
     local ai_se_s = r(out)
 
     putexcel A`row' = ("`name'")
     putexcel B`row' = ("`human_mean_s' (`human_se_s')")
-    putexcel C`row' = (human_rank[`i'])
-    putexcel D`row' = ("`ai_mean_s' (`ai_se_s')")
-    putexcel E`row' = (ai_rank[`i'])
+    putexcel C`row' = (pme_rank0[`i'])
+    putexcel G`row' = ("`ai_mean_s' (`ai_se_s')")
+    putexcel H`row' = (pme_rank1[`i'])
+
+    if (`t' == 1) {
+        putexcel D`row' = ("[Referent]")
+        putexcel I`row' = ("[Referent]")
+    }
+    else {
+        fmt2 b0[`i']
+        local human_b_s = r(out)
+        fmt2 lb0[`i']
+        local human_lb_s = r(out)
+        fmt2 ub0[`i']
+        local human_ub_s = r(out)
+        pformat p0[`i']
+        local human_p_s = r(out)
+        fmt2 cohen_d0[`i']
+        local human_d_s = r(out)
+
+        fmt2 b1[`i']
+        local ai_b_s = r(out)
+        fmt2 lb1[`i']
+        local ai_lb_s = r(out)
+        fmt2 ub1[`i']
+        local ai_ub_s = r(out)
+        pformat p1[`i']
+        local ai_p_s = r(out)
+        fmt2 cohen_d1[`i']
+        local ai_d_s = r(out)
+
+        putexcel D`row' = ("`human_b_s' (`human_lb_s', `human_ub_s')")
+        putexcel E`row' = ("`human_p_s'")
+        putexcel F`row' = ("`human_d_s'")
+        putexcel I`row' = ("`ai_b_s' (`ai_lb_s', `ai_ub_s')")
+        putexcel J`row' = ("`ai_p_s'")
+        putexcel K`row' = ("`ai_d_s'")
+    }
     local row = `row' + 1
 }
 
