@@ -8,6 +8,9 @@
 Thumbs.db
 .DS_Store
 
+# Local Cursor metadata and rules
+.cursor/
+
 # Legacy/non-manuscript generated figure outputs kept local only
 output/figures/**/*.png
 !output/figures/human_generated_vs_ai_generated/Figure2_Human_AI_Means_Researcher_vs_AI_Refined.png

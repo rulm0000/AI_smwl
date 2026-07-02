@@ -1,4 +1,4 @@
-* 7_Cohens_d_Decomposition.do
+* 4_Cohens_d_Decomposition.do
 * Calculates Campbell HLM Cohen's d values for warning-vs-control effects
 * and decomposes AI-minus-human differences in Cohen's d.
 *

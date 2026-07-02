@@ -1,4 +1,4 @@
-* 6_Viewpoints_Tables.do
+* 2_Viewpoints_Tables.do
 * Creates Viewpoints manuscript Table 2, Table 3, and supplemental eTable 2.
 
 clear all
