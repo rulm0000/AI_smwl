@@ -5,8 +5,7 @@
 clear all
 set more off
 
-capture confirm global output
-if _rc != 0 {
+if `"$output"' == "" {
     do "setup.do"
 }
 
