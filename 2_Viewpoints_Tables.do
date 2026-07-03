@@ -3,6 +3,7 @@
 
 clear all
 set more off
+version 19.5
 
 if `"$output"' == "" {
     do "setup.do"

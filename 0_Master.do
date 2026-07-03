@@ -3,6 +3,7 @@
 
 clear all
 set more off
+version 19.5
 local supplied_project_root `"$project_root"'
 
 * ----------------------------

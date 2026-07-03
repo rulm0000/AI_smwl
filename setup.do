@@ -1,7 +1,7 @@
 * setup.do
 * Centralized path setup for AI vs. Human analysis.
 
-version 15.0
+version 19.5
 set more off
 
 * Define project root. A caller may set this before running setup.do; otherwise
