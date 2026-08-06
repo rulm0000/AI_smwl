@@ -15,6 +15,7 @@
 * Shorrocks AF. Decomposition procedures for distributional analysis:
 * a unified framework based on the Shapley value. J Econ Inequal. 2013.
 * https://doi.org/10.1007/s10888-011-9214-z
+* Equation # 3.5
 
 clear all
 set more off
