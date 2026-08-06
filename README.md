@@ -4,7 +4,7 @@ This repository contains the Stata replication code and supporting files for the
 
 The analyses test whether a large language model (LLM) can (1) refine researcher-generated social media warnings to be perceived as more effective by human participants and (2) replicate human participant contrasts between warnings and a control message using LLM-powered AI personas.
 
-The full pipeline is orchestrated by `0_Master.do`, which runs the numbered analysis scripts in order.
+The full analysis can be processed with `0_Master.do`, which runs the numbered analysis scripts in order.
 
 ### Repository layout
 
