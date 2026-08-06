@@ -1,16 +1,11 @@
 * 0_Master.do
-* Orchestrates the AI vs. Human comparison and replication analysis.
+* Processes AI vs. Human comparison and replication analysis.
 
 clear all
 set more off
 version 19.5
 local supplied_project_root `"$project_root"'
 
-* ----------------------------
-* GitHub-friendly setup
-* ----------------------------
-* project_root should point to this analysis folder. To run from another
-* working directory, set global project_root before running this master file.
 
 * Anna file path
 if `"`supplied_project_root'"' != "" {
