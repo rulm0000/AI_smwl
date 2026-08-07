@@ -422,7 +422,7 @@ foreach t of numlist 1 5 2 8 6 4 3 7 {
 sort topic_order
 
 putexcel set "$tables/Table3_Warning_Topic_PME_by_Sample.xlsx", replace
-putexcel A1 = ("Table 3. Perceived message effectiveness by warning topic and sample, n=1,000 AI personas and n=1,012 human participants"), bold
+putexcel A1 = ("Table 3. Effect of warning topic on perceived message effectiveness by sample, n=1,000 AI personas and n=1,012 human participants"), bold
 putexcel B2 = ("AI personas"), bold hcenter
 putexcel G2 = ("Human participants"), bold hcenter
 putexcel A3 = ("Topic"), bold
