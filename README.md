@@ -15,7 +15,7 @@ The full analysis can be processed with `0_Master.do`, which runs the numbered a
 - `1_Human_AI_vs_Priority.do`
   - Compares AI-refined vs. researcher-generated warnings among human participants. Produces eTable 1. Effect of message source on perceived message effectiveness, n=1,012 human participants.
 - `2_Viewpoints_Tables.do`
-  - Produces Table 2. Sample characteristics, n=1,000 AI personas and n=1,012 human participants; Table 3. Effect of warning topic on perceived message effectiveness by sample, n=1,012 human participants and n=1,000 AI personas; and eTable 2. Effect of warning topic and sample on perceived message effectiveness, n=1,012 human participants and n=1,000 AI personas.
+  - Produces Table 2. Sample characteristics, n=1,000 AI personas and n=1,012 human participants; Table 3. Effect of warning topic on perceived message effectiveness by sample, n=1,000 AI personas and n=1,012 human participants; and eTable 2. Effect of warning topic and sample on perceived message effectiveness, n=1,012 human participants and n=1,000 AI personas.
 - `3_Manuscript_Figure2.do`
   - Produces Figure 2. Human participant ratings of perceived message effectiveness of researcher-generated vs. AI-refined warnings.
 - `4_Cohens_d_Decomposition.do`
@@ -59,7 +59,7 @@ Only the four tables and Figure 2 above are tracked manuscript/supplement output
 The pipeline produces the following tracked outputs. Titles match the paper and supplement:
 
 - Table 2. Sample characteristics, n=1,000 AI personas and n=1,012 human participants — `output/tables/Table_Viewpoints_Sample_Characteristics.xlsx`
-- Table 3. Effect of warning topic on perceived message effectiveness by sample, n=1,012 human participants and n=1,000 AI personas — `output/tables/Table3_Warning_Topic_PME_by_Sample.xlsx`
+- Table 3. Effect of warning topic on perceived message effectiveness by sample, n=1,000 AI personas and n=1,012 human participants — `output/tables/Table3_Warning_Topic_PME_by_Sample.xlsx`
 - eTable 1. Effect of message source on perceived message effectiveness, n=1,012 human participants — `output/tables/eTable1_Message_Source_PME.xlsx`
 - eTable 2. Effect of warning topic and sample on perceived message effectiveness, n=1,012 human participants and n=1,000 AI personas — `output/tables/eTable2_Warning_Topic_Sample_PME_Coefficients.xlsx`
 - Figure 2. Human participant ratings of perceived message effectiveness of researcher-generated vs. AI-refined warnings — `output/figures/human_generated_vs_ai_generated/Figure2_Human_AI_Means_Researcher_vs_AI_Refined.png`

@@ -422,9 +422,9 @@ foreach t of numlist 1 5 2 8 6 4 3 7 {
 sort topic_order
 
 putexcel set "$tables/Table3_Warning_Topic_PME_by_Sample.xlsx", replace
-putexcel A1 = ("Table 3. Perceived message effectiveness by warning topic and sample, n=1,012 human participants and n=1,000 AI personas"), bold
-putexcel B2 = ("Human participants"), bold hcenter
-putexcel G2 = ("AI personas"), bold hcenter
+putexcel A1 = ("Table 3. Perceived message effectiveness by warning topic and sample, n=1,000 AI personas and n=1,012 human participants"), bold
+putexcel B2 = ("AI personas"), bold hcenter
+putexcel G2 = ("Human participants"), bold hcenter
 putexcel A3 = ("Topic"), bold
 putexcel B3 = ("Mean (SE)"), bold
 putexcel C3 = ("Rank"), bold
@@ -452,10 +452,10 @@ forvalues i = 1/`=_N' {
     local ai_se_s = r(out)
 
     putexcel A`row' = ("`name'")
-    putexcel B`row' = ("`human_mean_s' (`human_se_s')")
-    putexcel C`row' = (pme_rank0[`i'])
-    putexcel G`row' = ("`ai_mean_s' (`ai_se_s')")
-    putexcel H`row' = (pme_rank1[`i'])
+    putexcel B`row' = ("`ai_mean_s' (`ai_se_s')")
+    putexcel C`row' = (pme_rank1[`i'])
+    putexcel G`row' = ("`human_mean_s' (`human_se_s')")
+    putexcel H`row' = (pme_rank0[`i'])
 
     if (`t' == 1) {
         putexcel D`row' = ("[Referent]")
@@ -484,12 +484,12 @@ forvalues i = 1/`=_N' {
         fmt2 cohen_d1[`i']
         local ai_d_s = r(out)
 
-        putexcel D`row' = ("`human_b_s' (`human_lb_s', `human_ub_s')")
-        putexcel E`row' = ("`human_p_s'")
-        putexcel F`row' = ("`human_d_s'")
-        putexcel I`row' = ("`ai_b_s' (`ai_lb_s', `ai_ub_s')")
-        putexcel J`row' = ("`ai_p_s'")
-        putexcel K`row' = ("`ai_d_s'")
+        putexcel D`row' = ("`ai_b_s' (`ai_lb_s', `ai_ub_s')")
+        putexcel E`row' = ("`ai_p_s'")
+        putexcel F`row' = ("`ai_d_s'")
+        putexcel I`row' = ("`human_b_s' (`human_lb_s', `human_ub_s')")
+        putexcel J`row' = ("`human_p_s'")
+        putexcel K`row' = ("`human_d_s'")
     }
     local row = `row' + 1
 }
