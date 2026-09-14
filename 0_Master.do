@@ -21,6 +21,15 @@ else {
 	global project_root "."
 }
 
+* ----------------------------
+* Options
+* ----------------------------
+* Step 5 draws the supplement box plot in Python through Stata's built-in
+* Python integration (no shell commands; works on Windows and macOS).
+* Set to 0 to skip it, e.g., if Stata is not linked to a Python installation
+* with pandas and matplotlib. All other outputs run either way.
+global run_python_figure 1
+
 do "$project_root/setup.do"
 
 display "========================================================="
@@ -42,6 +51,12 @@ do "3_Manuscript_Figure2.do"
 * 4. Cohen's d warning-vs-control values and decomposition
 display "Running Analysis 4: Cohen's d decomposition..."
 do "4_Cohens_d_Decomposition.do"
+
+* 5. Supplement eFigure: PME distributions, human participants vs. AI personas
+*    (data prepared in Stata, figure drawn by the Python script;
+*    controlled by global run_python_figure above)
+display "Running Analysis 5: Generating PME distribution box plot..."
+do "5_eFigure_PME_Distribution_BoxPlot.do"
 
 display "========================================================="
 display "AI vs. Human Analysis Pipeline Complete!"
