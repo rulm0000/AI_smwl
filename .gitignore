@@ -13,7 +13,9 @@ Thumbs.db
 
 # Legacy/non-manuscript generated figure outputs kept local only
 output/figures/**/*.png
+output/figures/**/*.csv
 !output/figures/human_generated_vs_ai_generated/Figure2_Human_AI_Means_Researcher_vs_AI_Refined.png
+!output/figures/ai_rated_vs_human_rated/eFigure_PME_Distribution_Humans_vs_AI_Personas_BoxPlot.png
 
 # Legacy/non-manuscript generated Excel outputs kept local only
 output/tables/*.xlsx
